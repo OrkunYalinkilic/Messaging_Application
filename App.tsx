@@ -16,9 +16,7 @@ export default class App extends React.Component<IProps, IState> {
   }
 
   state = {
-    email: '',
-    password: '',
-    login: false
+    text: ''
   }
 
   componentDidMount = () => {
@@ -30,59 +28,49 @@ export default class App extends React.Component<IProps, IState> {
       messagingSenderId: "403623250965",
       appId: "1:403623250965:web:90a37cc8e5e760c4b8521c"
     };
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-
-    firebase.auth().onAuthStateChanged(auth => {
-      if (auth) {
-        console.log("Giriş Yapıldı");
-
-      }
-      else {
-        console.log("Giriş Yapılmadı");
-
-      }
-    })
   }
 
-  kayitol = () => {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+  veriyaz = () => {
+    firebase.database().ref('veri').set(this.state.text)
+      .then(() => {
+        console.log("Veri Yazıldı");
+      })
   }
 
-  giris = () => {
-    firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password);
+  verioku = () => {
+    firebase.database().ref('veri').once('value', (snap) => { // once = çağırıldığında çalışır.
+      console.log(snap.val());
+    });
+
+    /* firebase.database().ref('veri').on('value',(snap)=>{ // on = database'de o veri değişir değişmez çalışır.(?)
+       console.log(snap.val());
+     });*/
   }
 
   render() {
     debugger;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
+
         <TextInput
-          placeholder="E-Mail Adresi"
+          placeholder="Veri"
           style={{ marginTop: 10, width: '80%', padding: 15, fontSize: 14, backgroundColor: 'lightgray' }}
           underlineColorAndroid='transparent'
-          onChangeText={email => this.setState({ email: email })}
-          value={this.state.email}
+          onChangeText={text => this.setState({ text: text })}
+          value={this.state.text}
           placeholderTextColor='gray'
         />
-        <TextInput
-          placeholder="Şifre"
-          style={{ marginTop: 10, width: '80%', padding: 15, fontSize: 14, backgroundColor: 'lightgray' }}
-          underlineColorAndroid='transparent'
-          onChangeText={password => this.setState({ password: password })}
-          value={this.state.password}
-          secureTextEntry
-          placeholderTextColor='gray'
-        />
-        <TouchableOpacity onPress={() => this.kayitol()} style={{ width: '80%' }}>
+
+        <TouchableOpacity onPress={() => this.veriyaz()} style={{ width: '80%' }}>
           <View style={{ alignItems: 'center', backgroundColor: '#FF655B', width: '100%', padding: 15, borderRadius: 4, marginTop: 10 }}>
-            <Text style={{ color: '#fff', fontSize: 14 }}>Kayıt Ol</Text>
+            <Text style={{ color: '#fff', fontSize: 14 }}>Veri Yaz</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>this.giris()} style={{ width: '80%' }}>
+        <TouchableOpacity onPress={() => this.verioku()} style={{ width: '80%' }}>
           <View style={{ alignItems: 'center', backgroundColor: '#FF655B', width: '100%', padding: 15, borderRadius: 4, marginTop: 10 }}>
-            <Text style={{ color: '#fff', fontSize: 14 }}>Giriş Yap</Text>
+            <Text style={{ color: '#fff', fontSize: 14 }}>Veri Oku</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -91,10 +79,4 @@ export default class App extends React.Component<IProps, IState> {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });
