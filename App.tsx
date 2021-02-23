@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import AppContainer from "./AppContainer";
 import firebase from 'firebase';
 
@@ -16,7 +16,7 @@ export default class App extends React.Component<IProps, IState> {
   }
 
   state = {
-    text: ''
+    image: ''
   }
 
   componentDidMount = () => {
@@ -31,21 +31,10 @@ export default class App extends React.Component<IProps, IState> {
     firebase.initializeApp(firebaseConfig);
   }
 
-  veriyaz = () => {
-    firebase.database().ref('veri').set(this.state.text)
-      .then(() => {
-        console.log("Veri Yazıldı");
-      })
-  }
-
-  verioku = () => {
-    firebase.database().ref('veri').once('value', (snap) => { // once = çağırıldığında çalışır.
-      console.log(snap.val());
-    });
-
-    /* firebase.database().ref('veri').on('value',(snap)=>{ // on = database'de o veri değişir değişmez çalışır.(?)
-       console.log(snap.val());
-     });*/
+  resimYukle = async () => {
+    let image = await firebase.storage().ref('imagern.jpg').getDownloadURL();
+    console.log(image);
+    this.setState({ image: image });
   }
 
   render() {
@@ -53,26 +42,17 @@ export default class App extends React.Component<IProps, IState> {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
 
-        <TextInput
-          placeholder="Veri"
-          style={{ marginTop: 10, width: '80%', padding: 15, fontSize: 14, backgroundColor: 'lightgray' }}
-          underlineColorAndroid='transparent'
-          onChangeText={text => this.setState({ text: text })}
-          value={this.state.text}
-          placeholderTextColor='gray'
+        <Image
+          style={{ width: '80%', height: '40%', borderRadius: 8 }}
+          source={{ uri: this.state.image }}
         />
 
-        <TouchableOpacity onPress={() => this.veriyaz()} style={{ width: '80%' }}>
+        <TouchableOpacity onPress={() => this.resimYukle()} style={{ width: '80%' }}>
           <View style={{ alignItems: 'center', backgroundColor: '#FF655B', width: '100%', padding: 15, borderRadius: 4, marginTop: 10 }}>
-            <Text style={{ color: '#fff', fontSize: 14 }}>Veri Yaz</Text>
+            <Text style={{ color: '#fff', fontSize: 14 }}>Resim Yükle</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => this.verioku()} style={{ width: '80%' }}>
-          <View style={{ alignItems: 'center', backgroundColor: '#FF655B', width: '100%', padding: 15, borderRadius: 4, marginTop: 10 }}>
-            <Text style={{ color: '#fff', fontSize: 14 }}>Veri Oku</Text>
-          </View>
-        </TouchableOpacity>
       </View>
     );
   }
