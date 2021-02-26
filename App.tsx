@@ -5,6 +5,8 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 import Route from "./src/Route";
+import { Provider } from 'mobx-react';
+
 export default class App extends React.Component {
   
   componentDidMount() {
@@ -13,7 +15,7 @@ export default class App extends React.Component {
 
   render() {
 
-    return <Route />
+    return <Route/>
   }
 
 }
