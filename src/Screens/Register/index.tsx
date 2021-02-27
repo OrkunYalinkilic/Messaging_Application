@@ -5,35 +5,47 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
+import firebase from 'firebase';
 
 interface Props {
-    navigation: any
+    navigation: any,
 }
 
 export default class Index extends Component<Props> {
 
     state = {
-        hidePassword:true,
-        checkbox:false
+        hidePassword: true,
+        checkbox: false,
     }
 
-    _handleSubmit = () => { //valuess
-        /*auth()
-            .createUserWithEmailAndPassword(values.email, values.password)
-            .then(() => {
-                const user = firebase.auth().currentUser;
-                user.updateProfile({
-                    displayName:values.name,
+    componentDidMount() {
+        var firebaseConfig = {
+            apiKey: "AIzaSyAykKajsO9SOrqon3u9ofo6aI9vu3AXA-4",
+            authDomain: "rnapp-2ff0a.firebaseapp.com",
+            projectId: "rnapp-2ff0a",
+            storageBucket: "rnapp-2ff0a.appspot.com",
+            messagingSenderId: "403623250965",
+            appId: "1:403623250965:web:90a37cc8e5e760c4b8521c"
+        };
+        firebase.initializeApp(firebaseConfig);
+    }
 
-                });
-                this.props.navigation.navigate('App');
+    _handleSubmit = (values) => {
+
+        console.log("email " + values.email + " password " + values.password);
+
+        firebase.auth()
+            .createUserWithEmailAndPassword("affsfa@sdf.com", "dsafsafsa")
+            .then(() => {
+                alert('User account created & sign In!');
+
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
                     alert('That email address is already in use!');
                 }
 
-                if(error.code === 'auth/weak-password'){
+                if (error.code === 'auth/weak-password') {
                     alert('Weak Password');
                 }
                 if (error.code === 'auth/invalid-email') {
@@ -41,40 +53,40 @@ export default class Index extends Component<Props> {
                 }
 
                 console.error(error);
-            });*/
+            });
     };
 
     render() {
         return (
-            <SafeAreaView style={{ flex:1}}>
-                <View style={{ backgroundColor:'white',justifyContent:'center',flex:1,paddingVertical:50,alignItems:'center'}}>
-                    <View style={{ alignItems:'center'}}>
+            <SafeAreaView style={{ flex: 1 }}>
+                <View style={{ backgroundColor: 'white', justifyContent: 'center', flex: 1, paddingVertical: 50, alignItems: 'center' }}>
+                    <View style={{ alignItems: 'center' }}>
                         <Text style={style.hero}>Welcome!</Text>
                         <Text style={style.hero_description}>Please provide following
                             details for your new account</Text>
                     </View>
                     <Formik
                         initialValues={{
-                            name:'',
-                            email:'',
-                            password:''
+                            name: '',
+                            email: '',
+                            password: ''
                         }}
                         onSubmit={this._handleSubmit}
                         validationSchema={
                             Yup.object().shape({
-                                email:Yup.string().email().required('Email address is required'),
-                                password:Yup.string().required('Password is Required')
+                                email: Yup.string().email().required('Email address is required'),
+                                password: Yup.string().required('Password is Required')
                             })
                         }
                     >
                         {
                             ({
-                                 values,
-                                 handleSubmit,
-                                 isValid,
-                                 isSubmitting,
-                                 errors,
-                                 handleChange
+                                values,
+                                handleSubmit,
+                                isValid,
+                                isSubmitting,
+                                errors,
+                                handleChange
                             }) => (
                                 <View style={style.form}>
                                     <TextInput
@@ -82,7 +94,7 @@ export default class Index extends Component<Props> {
                                         placeholder={"Name"}
                                         onChangeText={handleChange('name')}
                                         placeholderTextColor={"#302D4C"}
-                                        style={style.input}/>
+                                        style={style.input} />
                                     {(errors.name) && <Text style={style.error}>{errors.name}</Text>}
                                     <TextInput
                                         value={values.email}
@@ -90,7 +102,7 @@ export default class Index extends Component<Props> {
                                         keyboardType={"email-address"}
                                         onChangeText={handleChange('email')}
                                         placeholderTextColor={"#302D4C"}
-                                        style={style.input}/>
+                                        style={style.input} />
                                     {(errors.email) && <Text style={style.error}>{errors.email}</Text>}
                                     <View>
                                         <TextInput
@@ -99,21 +111,21 @@ export default class Index extends Component<Props> {
                                             placeholder={"Password"}
                                             placeholderTextColor={"#302D4C"}
                                             secureTextEntry={this.state.hidePassword}
-                                            style={style.input}/>
-                                        <TouchableOpacity onPress={()=>this.setState({ hidePassword:!this.state.hidePassword})} style={{ position:'absolute',right:15,top:15}}>
+                                            style={style.input} />
+                                        <TouchableOpacity onPress={() => this.setState({ hidePassword: !this.state.hidePassword })} style={{ position: 'absolute', right: 15, top: 15 }}>
                                             <Icon name={(this.state.hidePassword) ? "eye-slash" : 'eye'} size={20} />
                                         </TouchableOpacity>
                                         {(errors.password) && <Text style={style.error}>{errors.password}</Text>}
                                     </View>
                                     <View style={style.checkbox_area}>
-                                         <TouchableOpacity
-                                            onPress={() => this.setState({checkbox: !this.state.checkbox})}
+                                        <TouchableOpacity
+                                            onPress={() => this.setState({ checkbox: !this.state.checkbox })}
                                             style={style.checkbox}>
                                             {this.state.checkbox &&
-                                            <Text style={{fontSize: 25}}>✓</Text>
+                                                <Text style={{ fontSize: 25 }}>✓</Text>
                                             }
-                                        </TouchableOpacity> 
-                                        <View style={{marginLeft: 10, flex: 1, flexWrap: 'nowrap'}}>
+                                        </TouchableOpacity>
+                                        <View style={{ marginLeft: 10, flex: 1, flexWrap: 'nowrap' }}>
                                             <Text style={style.checkbox_text}>By creating your account you have to agree
                                                 with our Teams and Conditions.</Text>
                                         </View>
@@ -121,16 +133,25 @@ export default class Index extends Component<Props> {
 
                                     <TouchableOpacity
                                         disabled={!isValid || isSubmitting}
-                                        style={style.button}>
-                                        <Text style={style.button_text}>Sign up my Account</Text>
+                                        onPress={() => {
+                                            firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+                                                .then(() => { alert('User account created & sign In!'); })
+                                                .catch(error => {
+                                                    if (error.code === 'auth/email-already-in-use') { alert('That email address is already in use!'); }
+                                                    if (error.code === 'auth/weak-password') { alert('Weak Password'); }
+                                                    if (error.code === 'auth/invalid-email') { alert('That email address is invalid!'); }
+                                                    console.error(error);
+                                                });
+                                        }}
+                                        style={style.button}><Text style={style.button_text}>Sign up my Account</Text>
                                     </TouchableOpacity>
 
                                     <View style={style.bottom}>
-                                        <Text style={{fontSize: 17, color: '#302D4C'}}>Already have an account?
+                                        <Text style={{ fontSize: 17, color: '#302D4C' }}>Already have an account?
                                             - </Text>
                                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}><Text
-                                            style={{fontSize: 17, fontWeight: '600', color: '#302D4C'}}>Sign
-                                            In</Text></TouchableOpacity> 
+                                            style={{ fontSize: 17, fontWeight: '600', color: '#302D4C' }}>Sign
+                                            In</Text></TouchableOpacity>
                                     </View>
                                 </View>
                             )
@@ -144,64 +165,65 @@ export default class Index extends Component<Props> {
 }
 
 const style = StyleSheet.create({
-    hero: { color:'#1C1939',fontWeight:'700',fontSize:40},
-    hero_description:{
-        textAlign: 'center',paddingHorizontal: 40,
-        color:'rgba(26,25,57,0.8)',fontSize:17,marginTop:15,fontWeight:'500'},
-    form:{ flex:1,marginTop:80},
-    input:{
-        backgroundColor:'#F7F7F7',
-        padding:15,
-        width:300,
-        height:50,
-        borderRadius:10,
-        paddingHorizontal:25,
-        marginBottom:10
+    hero: { color: '#1C1939', fontWeight: '700', fontSize: 40 },
+    hero_description: {
+        textAlign: 'center', paddingHorizontal: 40,
+        color: 'rgba(26,25,57,0.8)', fontSize: 17, marginTop: 15, fontWeight: '500'
     },
-    forgot:{
-        flexDirection:'row',justifyContent:'flex-end',
-        marginTop:10,
-        color:'#706E83'
+    form: { flex: 1, marginTop: 80 },
+    input: {
+        backgroundColor: '#F7F7F7',
+        padding: 15,
+        width: 300,
+        height: 50,
+        borderRadius: 10,
+        paddingHorizontal: 25,
+        marginBottom: 10
     },
-    button:{
+    forgot: {
+        flexDirection: 'row', justifyContent: 'flex-end',
+        marginTop: 10,
+        color: '#706E83'
+    },
+    button: {
         backgroundColor: '#7165E3',
-        padding:20,
-        marginTop:45,
+        padding: 20,
+        marginTop: 45,
         borderRadius: 10,
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems: 'center'
     },
-    button_text:{
-        color:'white',
-        fontWeight:'600',
-        fontSize:18,
-        textAlign:'center'
+    button_text: {
+        color: 'white',
+        fontWeight: '600',
+        fontSize: 18,
+        textAlign: 'center'
     },
-    bottom:{
+    bottom: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'center',
-        marginTop:20,
+        justifyContent: 'center',
+        marginTop: 20,
     },
-    checkbox_area:{
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop:5,
+    checkbox_area: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
     },
-    checkbox:{
-        width:34,
-        height:34,
-        backgroundColor:"rgba(113,101,227,0.2)",
-        borderWidth:1,
-        borderColor:'#7165E3',
-        borderRadius:7,
-        justifyContent:'center',
-        alignItems:'center'
+    checkbox: {
+        width: 34,
+        height: 34,
+        backgroundColor: "rgba(113,101,227,0.2)",
+        borderWidth: 1,
+        borderColor: '#7165E3',
+        borderRadius: 7,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    checkbox_text :{
-        color:'#656379'
+    checkbox_text: {
+        color: '#656379'
     },
-    error:{
-        color:'red',
+    error: {
+        color: 'red',
     }
 })

@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
 
 
 interface Props {
