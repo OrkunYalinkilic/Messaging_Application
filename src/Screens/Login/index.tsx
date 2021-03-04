@@ -3,8 +3,7 @@ import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet, TextInput } fro
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import auth from '@react-native-firebase/auth';
-import firebase from '@react-native-firebase/app';
+import firebase from 'firebase';
 
 
 interface Props {
@@ -13,16 +12,28 @@ interface Props {
 
 export default class Index extends Component<Props>{
 
-
     state = {
         hidePassword: true
     }
 
-    _handleSubmit = () => { //valuess
-        /*auth()
+    componentDidMount() {
+        var firebaseConfig = {
+            apiKey: "AIzaSyAykKajsO9SOrqon3u9ofo6aI9vu3AXA-4",
+            authDomain: "rnapp-2ff0a.firebaseapp.com",
+            projectId: "rnapp-2ff0a",
+            storageBucket: "rnapp-2ff0a.appspot.com",
+            messagingSenderId: "403623250965",
+            appId: "1:403623250965:web:90a37cc8e5e760c4b8521c"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+    }
+
+    _handleSubmit = (values) => {
+        firebase.auth()
             .signInWithEmailAndPassword(values.email, values.password)
             .then(() => {
-               this.props.navigation.navigate('App');
+                this.props.navigation.navigate('App');
             })
             .catch(error => {
                 if (error.code === 'auth/wrong-password') {
@@ -31,14 +42,13 @@ export default class Index extends Component<Props>{
                 }
 
                 if (error.code === 'auth/user-not-found') {
-                  alert('User Not Found');
-                  return;
+                    alert('User Not Found');
+                    return;
                 }
 
                 console.error(error);
-            });*/
+            });
     }
-
     render() {
 
         return (
@@ -98,7 +108,26 @@ export default class Index extends Component<Props>{
 
                                     <TouchableOpacity
                                         disabled={!isValid}
-                                        // onPress={handleSubmit}
+                                        onPress={() => {
+                                            firebase.auth()
+                                                .signInWithEmailAndPassword(values.email, values.password)
+                                                .then(() => {
+                                                    this.props.navigation.navigate('Home');
+                                                })
+                                                .catch(error => {
+                                                    if (error.code === 'auth/wrong-password') {
+                                                        alert('Wrong Password')
+                                                        return;
+                                                    }
+
+                                                    if (error.code === 'auth/user-not-found') {
+                                                        alert('User Not Found');
+                                                        return;
+                                                    }
+
+                                                    console.error(error);
+                                                });
+                                        }}
                                         style={style.button}>
                                         <Text style={style.button_text}>Sign in My Account</Text>
                                     </TouchableOpacity>

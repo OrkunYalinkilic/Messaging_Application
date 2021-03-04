@@ -18,17 +18,6 @@ export default class Index extends Component<Props> {
         checkbox: false,
     }
 
-    componentDidMount() {
-        var firebaseConfig = {
-            apiKey: "AIzaSyAykKajsO9SOrqon3u9ofo6aI9vu3AXA-4",
-            authDomain: "rnapp-2ff0a.firebaseapp.com",
-            projectId: "rnapp-2ff0a",
-            storageBucket: "rnapp-2ff0a.appspot.com",
-            messagingSenderId: "403623250965",
-            appId: "1:403623250965:web:90a37cc8e5e760c4b8521c"
-        };
-        firebase.initializeApp(firebaseConfig);
-    }
 
     _handleSubmit = (values) => {
 
