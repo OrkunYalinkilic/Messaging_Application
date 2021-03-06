@@ -25,7 +25,9 @@ const AuthenticateStack = createStackNavigator({
         screen: Register,
     },
     Home: {
-        screen: Home
+        screen: Home,
+        
+
     }
 });
 /* 
