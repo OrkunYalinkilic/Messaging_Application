@@ -5,7 +5,6 @@ import { Formik } from "formik";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import firebase from 'firebase';
 
-
 interface Props {
     navigation: any
 }

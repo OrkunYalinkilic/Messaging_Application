@@ -4,7 +4,6 @@ import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet, TextInput } fro
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import auth from '@react-native-firebase/auth';
 import firebase from 'firebase';
 
 interface Props {
