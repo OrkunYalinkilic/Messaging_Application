@@ -123,7 +123,13 @@ export default class Index extends Component<Props> {
                                         disabled={!isValid || isSubmitting}
                                         onPress={() => {
                                             firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
-                                                .then(() => { alert('User account created & sign In!'); })
+                                                .then(() => {
+                                                    firebase.auth().currentUser?.updateProfile({
+                                                        displayName: values.name,
+                                                    });
+
+                                                    alert('User account created & sign In!');
+                                                })
                                                 .catch(error => {
                                                     if (error.code === 'auth/email-already-in-use') { alert('That email address is already in use!'); }
                                                     if (error.code === 'auth/weak-password') { alert('Weak Password'); }
