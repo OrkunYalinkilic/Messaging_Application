@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, SafeAreaView, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+//import firebase from 'firebase';
+//import Icon from 'react-native-vector-icons/FontAwesome5';
 //import database from '@react-native-firebase/database';
 //import RoomItem from "../../Components/Rooms/RoomItem";
-
-interface Props {
-    navigation: any
-}
 
 
 export default class index extends React.Component {
