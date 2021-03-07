@@ -10,6 +10,8 @@ import Login from './Screens/Login';
 import Register from './Screens/Register';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
+import ChatRoomCreate from './Screens/Chat/Create';
+
 const AuthenticateStack = createStackNavigator({
     Login: {
         screen: Login,
@@ -19,7 +21,14 @@ const AuthenticateStack = createStackNavigator({
     },
     Home: {
         screen: Home,
+    },
+    ChatRoomCreate:{
+        screen:ChatRoomCreate,
+        navigationOptions:{
+            title:'New Chat Room'
+        }
     }
+
 });
 
 export default createAppContainer(AuthenticateStack);
