@@ -32,19 +32,20 @@ const style = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        padding:20,
+        padding:11,
         marginBottom:5,
         borderRadius:5,
         flexDirection:'row',
         alignItems:'center'
     },
     title:{
-        fontSize:20,
+        fontSize:17,
         color:'black',
-        fontWeight:'600'
+        fontWeight:'700',
+        paddingTop:1
     },
     createdUser:{
-        fontSize:13,
+        fontSize:12,
         color:'#a4a4a4'
     }
 })

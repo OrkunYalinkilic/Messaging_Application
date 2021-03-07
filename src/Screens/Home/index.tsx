@@ -26,7 +26,7 @@ export default class index extends Component<Props> {
                     this.state.rooms.push(
                         new Room(item.val().name, item.val().userName, item.val().userId, item.key)
                     );
-                })
+                });
             });
 
         this.state.rooms.forEach(i => {
@@ -53,7 +53,7 @@ export default class index extends Component<Props> {
             </TouchableOpacity>
 
             <FlatList
-                style={{ flex: 1, padding: 5 }}
+                style={{ flex: 1, padding: 4 }}
                 data={this.state.rooms}
                 renderItem={this.renderItem}
             />
