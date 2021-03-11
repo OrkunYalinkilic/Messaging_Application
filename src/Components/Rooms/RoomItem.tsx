@@ -1,10 +1,13 @@
 import React from 'react';
 import { View , Text,StyleSheet,TouchableOpacity} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import NavigationService from '../NavigationService';
 //import NavigationService from "../NavigationService";
 
 const RoomItem = ({ item }) => {
     return (<TouchableOpacity 
+        onPress ={()=>NavigationService.navigate('ChatRoomDetail')}
+
 /*         onPress={
         ()=>NavigationService.navigate('ChatRoomDetail',{
             id : item.id,
