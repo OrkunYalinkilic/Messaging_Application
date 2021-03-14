@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, SafeAreaView, FlatList, TextInput, StyleSheet } from 'react-native';
 import Message from '../../../Components/Rooms/Message';
+import io from 'socket.io-client/dist/socket.io';
+
+const connectionConfig = {
+    jsonp: false,
+    reconnection: true,
+    reconnectionDelay: 100,
+    reconnectionAttempts: 100000,
+    transports: ['websocket'],
+};
 
 export default class index extends Component {
 
@@ -9,6 +18,11 @@ export default class index extends Component {
             title: navigation.getParam("name")
         }
     }
+
+    componentDidMount(){
+        
+    }
+
 
     renderItem = ({ item, index }) => {
         return <Message item={item} index={index} />

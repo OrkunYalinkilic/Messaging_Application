@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const Message = ({ item, index }) => {
     return <View style={(index % 2 === 0) ? style.other : style.me} >
         <View style={[style.bubble, { backgroundColor: (index % 2 === 0) ? '#EAEAEA' : '#30B485' }]} >
-            <Text>Textttt</Text>
+            <Text style={{ fontSize:17,color:(index % 2 === 0) ? '#575757' : 'white'}} >Textttt</Text>
         </View>
     </View>
 };
