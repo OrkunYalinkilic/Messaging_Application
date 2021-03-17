@@ -7,7 +7,7 @@ const connectionConfig = {
     jsonp: false,
     reconnection: true,
     reconnectionDelay: 100,
-    reconnectionAttempts: 100000,
+    reconnectionAttempts: 1000,
     transports: ['websocket'],
 };
 
@@ -19,23 +19,37 @@ export default class index extends Component {
         }
     }
 
-    componentDidMount(){
-        
+    componentDidMount() {
+       
+        console.log('detay sayfasına gelindi');
+       
+        const socket = io.connect("http://192.168.1.60:5500", connectionConfig);
+
+        socket.on('connect',function(){
+            alert('socket baglandi');
+            
+        });
+
+        /*  socket.on("connect", () => {
+              console.log("Basarili :D");
+          })*/
+
+        /*      var socket = io('http://192.168.2.1:3232:3200', connectionConfig);
+             socket.on('connect', function () {
+                 alert('Socket Baglandi');
+             });
+      */
     }
-
-
     renderItem = ({ item, index }) => {
         return <Message item={item} index={index} />
     }
-
-
 
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
 
                 <FlatList
-                    data={['a', 'b', 'c', 'd', 'e']}
+                    data={['a', 'b', 'c', 'd', 'e', 'f', 'g']}
                     renderItem={this.renderItem}
                     style={style.flatlist} />
 

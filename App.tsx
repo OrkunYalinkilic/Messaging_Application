@@ -6,12 +6,12 @@ import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 import Route from "./src/Route";
 import { Provider } from 'mobx-react';
-import NavigationService from './src/Components/NavigationService'
+import NavigationService from './src/Components/NavigationService';
 
 export default class App extends React.Component {
 
   componentDidMount() {
-
+    
   }
 
   render() {
