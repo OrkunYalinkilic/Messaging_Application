@@ -21,8 +21,13 @@ export default class index extends Component {
 
     componentDidMount() {
         const socket = io.connect("http://192.168.1.60:5500", connectionConfig);
+        
         socket.on('connect', function () {
-            alert('socket baglandi');
+            console.log('socket baglandi');
+        });
+        
+        socket.on('hello',()=>{
+            alert('Selamla');
         });
     }
 

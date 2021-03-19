@@ -7,4 +7,8 @@ app.get('/', function (req, res) {
     res.send('Hello');
 });
 
+io.on('connection',function (socket) {
+    socket.emit('hello');
+});
+
 server.listen(5500);
