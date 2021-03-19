@@ -7,6 +7,8 @@ import RoomItem from "../../Components/Rooms/RoomItem";
 import { Room } from '../../Model/room';
 import { string } from 'yup/lib/locale';
 
+
+
 interface Props {
     navigation: any
 }
@@ -32,7 +34,7 @@ export default class index extends Component<Props> {
         this.state.rooms.forEach(i => {
             if (i.name === "" || i.name === null || i.name === undefined) this.state.rooms.splice(this.state.rooms.findIndex(a => a.id == i.id), 1);
         });
-
+        
         console.log(this.state.rooms);
     };
 

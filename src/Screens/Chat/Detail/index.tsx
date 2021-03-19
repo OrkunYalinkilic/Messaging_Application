@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, SafeAreaView, FlatList, TextInput, StyleSheet } from 'react-native';
 import Message from '../../../Components/Rooms/Message';
 import io from 'socket.io-client/dist/socket.io';
+import { MessageModel } from '../../../Model/messagemodel';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import firebase from 'firebase';
 
@@ -20,7 +21,7 @@ const connectionConfig = {
 export default class index extends Component<Props> {
 
     state = {
-        messages: [],
+        messages: [new MessageModel()],
         text: '',
         connectedUserCount: 0,
     }
@@ -38,6 +39,22 @@ export default class index extends Component<Props> {
             console.log('socket baglandi');
         });
 
+        firebase.database()
+            .ref('messages/')
+            .on('value', snapshot => {
+                var messages = [new MessageModel()];
+                snapshot.forEach((item) => {
+                    messages.push(
+                        new MessageModel(item.val().roomId, item.val().text, item.val().userName, item.val().userId, item.key)
+                    )
+
+                })
+
+              //  this.setState({ messages });
+                console.log(messages);
+            }
+
+            );
     }
 
     renderItem = ({ item, index }) => {
