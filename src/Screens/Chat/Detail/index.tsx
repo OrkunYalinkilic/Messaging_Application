@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, SafeAreaView, FlatList, TextInput, StyleSheet } from 'react-native';
 import Message from '../../../Components/Rooms/Message';
 import io from 'socket.io-client/dist/socket.io';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import firebase from 'firebase';
+
+interface Props {
+    navigation: any
+}
 
 const connectionConfig = {
     jsonp: false,
@@ -11,7 +17,13 @@ const connectionConfig = {
     transports: ['websocket'],
 };
 
-export default class index extends Component {
+export default class index extends Component<Props> {
+
+    state = {
+        messages: [],
+        text: '',
+        connectedUserCount: 0,
+    }
 
     static navigationOptions = ({ navigation }) => {
         return {
@@ -21,21 +33,38 @@ export default class index extends Component {
 
     componentDidMount() {
         const socket = io.connect("http://192.168.1.60:5500", connectionConfig);
-        
+
         socket.on('connect', function () {
             console.log('socket baglandi');
         });
-        
-        socket.on('hello',()=>{
-            alert('Selamla');
-        });
+
     }
 
     renderItem = ({ item, index }) => {
         return <Message item={item} index={index} />
     }
 
+    handleSend = () => {
+        const { text } = this.state;
+        const roomId = this.props.navigation.getParam("id");
+
+        const user = firebase.auth().currentUser;
+        const userId = user?.uid;
+        const userName = user?.displayName;
+        var database = firebase.database().ref('messages/');
+        database.push({
+            roomId,
+            text,
+            userId,
+            userName
+        }).then((result) => {
+            this.setState({ text: '' })
+        }).catch((error) => console.log(error));
+
+    }
+
     render() {
+        const { text, messages, connectedUserCount } = this.state;
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
@@ -46,9 +75,14 @@ export default class index extends Component {
                 <View style={style.input_area}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <TextInput
+                            value={text}
+                            onChangeText={(text) => this.setState({ text })}
                             style={style.input}
                             placeholder={"Writing..."}
                         />
+                        <TouchableOpacity onPress={this.handleSend}>
+                            <Icon style={{ marginLeft: 10 }} color={"#30B485"} name={"paper-plane"} size={25} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </SafeAreaView>
