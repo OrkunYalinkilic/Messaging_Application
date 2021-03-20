@@ -1,10 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import firebase from 'firebase';
 
 const Message = ({ item, index }) => {
-    return <View style={(index % 2 === 0) ? style.other : style.me} >
-        <View style={[style.bubble, { backgroundColor: (index % 2 === 0) ? '#EAEAEA' : '#30B485' }]} >
-            <Text style={{ fontSize:17,color:(index % 2 === 0) ? '#575757' : 'white'}} >Textttt</Text>
+
+    const user = firebase.auth().currentUser;
+    const userId = user?.uid;
+
+    return <View style={(userId != item.userId) ? style.other : style.me} >
+        <View style={[style.bubble, { backgroundColor: ((userId != item.userId)) ? '#EAEAEA' : '#30B485' }]} >
+        <Text style={{ fontSize:17,color:(userId != item.userId) ? '#575757' : 'white'}}>{item.text}</Text>
+                <Text style={{ fontSize:11,color:(userId != item.userId) ? '#575757' : 'white'}}>{item.userName}</Text>
         </View>
     </View>
 };

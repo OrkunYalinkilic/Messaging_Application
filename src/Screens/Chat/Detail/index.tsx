@@ -85,7 +85,7 @@ export default class index extends Component<Props> {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
-                    data={['a', 'b', 'c', 'd', 'e', 'f', 'g']}
+                    data={messages}
                     renderItem={this.renderItem}
                     style={style.flatlist} />
 
