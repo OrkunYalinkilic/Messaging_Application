@@ -39,22 +39,21 @@ export default class index extends Component<Props> {
             console.log('socket baglandi');
         });
 
+        const roomId = this.props.navigation.getParam("id");
+
         firebase.database()
-            .ref('messages/')
+            .ref(`messages/${roomId}`)
             .on('value', snapshot => {
                 var messages = [new MessageModel()];
                 snapshot.forEach((item) => {
                     messages.push(
                         new MessageModel(item.val().roomId, item.val().text, item.val().userName, item.val().userId, item.key)
                     )
-
                 })
 
-              //  this.setState({ messages });
+                this.setState({ messages });
                 console.log(messages);
-            }
-
-            );
+            });
     }
 
     renderItem = ({ item, index }) => {
@@ -68,7 +67,8 @@ export default class index extends Component<Props> {
         const user = firebase.auth().currentUser;
         const userId = user?.uid;
         const userName = user?.displayName;
-        var database = firebase.database().ref('messages/');
+        var database = firebase.database().ref(`messages/${roomId}`);
+
         database.push({
             roomId,
             text,
@@ -77,7 +77,7 @@ export default class index extends Component<Props> {
         }).then((result) => {
             this.setState({ text: '' })
         }).catch((error) => console.log(error));
-
+            
     }
 
     render() {
