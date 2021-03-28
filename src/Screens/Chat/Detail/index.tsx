@@ -31,6 +31,7 @@ export default class index extends Component<Props> {
             title: navigation.getParam("name")
         }
     }
+    flatListRef: any;
 
     componentDidMount() {
         const socket = io.connect("http://192.168.1.60:5500", connectionConfig);
@@ -52,7 +53,7 @@ export default class index extends Component<Props> {
                 })
 
                 this.setState({ messages });
-                console.log(messages);
+                this.flatListRef.scrollToEnd();
             });
     }
 
@@ -77,7 +78,7 @@ export default class index extends Component<Props> {
         }).then((result) => {
             this.setState({ text: '' })
         }).catch((error) => console.log(error));
-            
+
     }
 
     render() {
@@ -85,6 +86,7 @@ export default class index extends Component<Props> {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
+                    ref={(ref) => this.flatListRef = ref}
                     data={messages}
                     renderItem={this.renderItem}
                     style={style.flatlist} />
