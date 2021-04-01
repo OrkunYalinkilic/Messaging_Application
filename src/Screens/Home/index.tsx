@@ -7,8 +7,6 @@ import RoomItem from "../../Components/Rooms/RoomItem";
 import { Room } from '../../Model/room';
 import { string } from 'yup/lib/locale';
 
-
-
 interface Props {
     navigation: any
 }

@@ -3,7 +3,6 @@ import { View, Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } fro
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Icon from "react-native-vector-icons/FontAwesome5";
-//import database  from '@react-native-firebase/database';
 import firebase from 'firebase';
 
 interface Props {
@@ -35,6 +34,7 @@ export default class Index extends Component<Props> {
         const userName = user?.displayName;
 
         var database = firebase.database().ref('/rooms');
+        
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ backgroundColor: 'white', justifyContent: 'center', flex: 1, paddingVertical: 50, alignItems: 'center' }}>
